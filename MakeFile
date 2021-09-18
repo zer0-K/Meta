@@ -1,0 +1,53 @@
+# Meta make file
+# ============================
+#
+# This file allows you to compile the project. You can use an IDE as well
+#
+# Organisation:
+#  1) Sources (*.java) are in the directory named 'src'
+#     Classes of a package named X are in 'src/X
+#     Classes of the default package are in 'src/main'
+#     Classes of the test package are in 'src/test'
+#
+#  2) Bytecodes (*.class) are in the directory named 'bin'
+#     Sources hierarchy (by packages) is conserved
+#
+# Compilation:
+#  javac options:
+#   -d : directory in which the '.class' are
+#   -classpath : directory where the '.class' are searched
+#   -sourcepath : directory where the '.java' (dependencies) are searched
+
+JFLAGS = -g
+JC = javac
+
+.SUFFIXES: .java .class
+
+.java.class:
+	$(JC) $(JFLAGS) $*.java
+
+CLASSES = \
+		  src/main/meta/Meta.java \
+		  src/main/gui/DataGUI.java
+
+all: Meta test1
+
+Meta:
+	javac -d bin -sourcepath src src/main/meta/Meta.java
+
+test1:
+	javac -d bin -sourcepath src src/test/meta/MetaTest1.java
+
+# Execution:
+# You can directly write in the command line :
+#   > java Meta
+# or use this make file:
+#   > make exeMeta
+exeMeta: 
+	java Meta
+
+exetest1: 
+	java Meta
+
+clean:
+	rm -rf bin/*.class
